@@ -1,23 +1,16 @@
-using System;
 using AYellowpaper.SerializedCollections;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Controllers 
 {
-    public class SignalBus : MonoBehaviour
+    public class SignalBus : Singleton<SignalBus>
     {
         [SerializeField] private SerializedDictionary<string, UnityEvent> signals;
 
-        public static SignalBus Instance { get; private set; }
+        protected override void DestroyInstance() => Destroy(Instance);
 
-        void Awake()
-        {
-            if (Instance != null)
-                Destroy(Instance);
-            Instance = this;
-        }
+        protected override void CreateInstance() => Instance = this;
 
         public void FireSignal(string signalName) => GetSignal(signalName)?.Invoke();
         public void SubscribeEvent(string signalName, UnityAction action) => GetSignal(signalName)?.AddListener(action);
