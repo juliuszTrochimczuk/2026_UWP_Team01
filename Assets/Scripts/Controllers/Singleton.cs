@@ -15,7 +15,7 @@ namespace Controllers
             CreateInstance();
         }
 
-        private void Oestroy()
+        private void OnDestroy()
         {
             if (isDestructable)
                 DestroyInstance();
