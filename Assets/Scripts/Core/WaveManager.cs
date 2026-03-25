@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Wave;
+using UnityEngine.Splines;
+using AI;
 
 namespace Controllers
 {
@@ -10,15 +12,17 @@ namespace Controllers
         protected override void CreateInstance() => Instance = this;
 
         [SerializeField] private List<WaveData> waves;
-        [SerializeField] private Transform spawnPoint;
         [SerializeField] private float delayBetweenSpawns = 1f;
         [SerializeField] private float delayBetweenWaves = 3f;
+        [SerializeField] private SplineContainer path;
+        [SerializeField] private float spawnHeightOffset = 1f;
 
         private readonly List<GameObject> activeSpawnInstances = new();
 
         private int enemiesActiveInCurrentWave;
         private Coroutine defenseRoutine;
         private bool wavesAborted;
+        private float pathStart;
 
         public int CurrentWaveIndex { get; private set; }
 
@@ -54,7 +58,7 @@ namespace Controllers
 
         private IEnumerator ExecuteDefensePhase()
         {
-            if (spawnPoint == null || waves == null || waves.Count == 0) yield break;
+            if (waves == null || waves.Count == 0 || path == null) yield break;
 
             for (int i = 0; i < waves.Count && !wavesAborted; i++)
             {
@@ -81,10 +85,16 @@ namespace Controllers
         {
             int count = wave.SpawnCount;
             GameObject prefab = wave.EnemyPrefab;
+            Vector3 startPos = path.transform.TransformPoint(path.Spline.EvaluatePosition(pathStart));
+            startPos.y = spawnHeightOffset;
+
 
             for (int i = 0; i < count; i++)
             {
-                var instance = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
+                var instance = Instantiate(prefab, startPos, Quaternion.identity);
+                var movement = instance.GetComponent<EnemyMovement>();
+                movement?.SetPath(path);
+
                 activeSpawnInstances.Add(instance);
                 enemiesActiveInCurrentWave++;
 

@@ -396,7 +396,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1e2d3c4b5a6978890a1b2c3d4e5f604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Controllers.BaseHealth
-  isDestructable: 0
   maxHealth: 100
 --- !u!4 &892518038
 Transform:
@@ -442,7 +441,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1e2d3c4b5a6978890a1b2c3d4e5f605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Controllers.AudioManager
-  isDestructable: 0
   ambientSource: {fileID: 0}
   sfxSource: {fileID: 0}
 --- !u!4 &953547063
@@ -616,7 +614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b3c4d5e6f708192a3b4c5d6e7f8091, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Controllers.WaveManager
-  isDestructable: 0
   waves:
   - {fileID: 11400000, guid: 94032bc09f3a44c37b8ce9ad2a9d8642, type: 2}
   - {fileID: 11400000, guid: 1cc467a9ca8a04240bd27d27789fb710, type: 2}
@@ -624,6 +621,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 257418034}
   delayBetweenSpawns: 1
   delayBetweenWaves: 3
+  path: {fileID: 728244155}
 --- !u!4 &1508925853
 Transform:
   m_ObjectHideFlags: 0
@@ -761,7 +759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435e4a996372334cf8eaafd6ea3f7f53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SignalBus
-  isDestructable: 0
   signals:
     _serializedList:
     - Key: GameLost
@@ -946,7 +943,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2005811733}
   - component: {fileID: 2005811732}
-  - component: {fileID: 2005811734}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -966,7 +962,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e2d3c4b5a6978890a1b2c3d4e5f607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Controllers.GameManager
-  isDestructable: 0
 --- !u!4 &2005811733
 Transform:
   m_ObjectHideFlags: 0
@@ -982,18 +977,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2005811734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2005811731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 481fd16fdc44e4812abaff995af56b8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Controllers.DefenseStarter
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
