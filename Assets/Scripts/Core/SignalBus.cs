@@ -4,11 +4,9 @@ using UnityEngine.Events;
 
 namespace Controllers 
 {
-    public class SignalBus : Singleton<SignalBus>
+    public class SignalBus : PersistentSingleton<SignalBus>
     {
         [SerializeField] private SerializedDictionary<string, UnityEvent> signals;
-
-        protected override void DestroyInstance() => Destroy(Instance);
 
         protected override void CreateInstance() => Instance = this;
 
