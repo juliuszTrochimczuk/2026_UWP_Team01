@@ -49,15 +49,5 @@ namespace Controllers
         }
 
         private void Awake() => currentHealth = MaxHealth;
-
-/*         public void TakeDamage(int amount)
-        {
-            if (amount <= 0)
-                return;
-
-            currentHealth -= amount;
-            if (currentHealth <= 0)
-                GameManager.Instance?.OnLose();
-        } */
     }
 }
