@@ -5,6 +5,7 @@ using Wave;
 using UnityEngine.Splines;
 using AI;
 using Abstraction;
+using UnityEngine.Events;
 
 namespace Managers
 {
@@ -26,6 +27,11 @@ namespace Managers
         private float pathStart;
 
         public int CurrentWaveIndex { get; private set; }
+        public int WaveCount => waves.Count;
+
+        [SerializeField] private UnityEvent onWaveStart;
+        public void OnWaveStartAddListener(UnityAction action) => onWaveStart.AddListener(action);
+        public void OnWaveStartRemoveListener(UnityAction action) => onWaveStart.RemoveListener(action);
 
         public void BeginDefenseWaves()
         {
@@ -68,6 +74,7 @@ namespace Managers
                     continue;
 
                 CurrentWaveIndex = i;
+                onWaveStart.Invoke();
                 yield return SpawnEntireWave(wave);
                 yield return WaitUntilCurrentWaveEnds();
 
