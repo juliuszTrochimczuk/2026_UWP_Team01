@@ -1,14 +1,15 @@
+using Abstraction;
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Controllers 
+namespace Managers 
 {
     public class SignalBus : PersistentSingleton<SignalBus>
     {
         [SerializeField] private SerializedDictionary<string, UnityEvent> signals;
 
-        protected override void CreateInstance() => Instance = this;
+        protected override SignalBus CreateInstance() => this;
 
         public void FireSignal(string signalName) => GetSignal(signalName)?.Invoke();
         public void SubscribeEvent(string signalName, UnityAction action) => GetSignal(signalName)?.AddListener(action);

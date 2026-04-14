@@ -1,17 +1,16 @@
 using UnityEngine;
 
-namespace Controllers 
+namespace Abstraction 
 {
     public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
         public static T Instance { get; protected set; }
         
-        private void Awake()
+        protected virtual void Awake()
         {
             if (Instance != null)
                 DestroyInstance();
-            CreateInstance();
-            OnAwake();
+            Instance = CreateInstance();
         }
 
         private void OnDestroy()
@@ -20,7 +19,6 @@ namespace Controllers
         }
 
         protected virtual void DestroyInstance() => Destroy(Instance);
-        protected abstract void CreateInstance();
-        protected virtual void OnAwake() { }
+        protected abstract T CreateInstance();
     }
 }

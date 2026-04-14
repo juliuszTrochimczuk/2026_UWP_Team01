@@ -1,21 +1,56 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Controllers
 {
-    public class BaseHealth : Singleton<BaseHealth>
+    public class BaseHealth : MonoBehaviour
     {
-        [SerializeField] private int maxHealth = 100;
+        [field: SerializeField] public int MaxHealth { get; private set; } = 100;
+
+        [SerializeField] private UnityEvent<BaseHealth> onHealthChange;
+        public void OnHealthChangeAddListener(UnityAction<BaseHealth> action) => onHealthChange.AddListener(action);
+        public void OnHealthChangeRemoveListener(UnityAction<BaseHealth> action) => onHealthChange.RemoveListener(action);
+
+        [SerializeField] private UnityEvent<BaseHealth> onTakeDamage;
+        public void OnTakeDamageAddListener(UnityAction<BaseHealth> action) => onTakeDamage.AddListener(action);
+        public void OnTakeDamageRemoveListener(UnityAction<BaseHealth> action) => onTakeDamage.RemoveListener(action);
+
+        [SerializeField] private UnityEvent<BaseHealth> onHealing;
+        public void OnHealingAddListener(UnityAction<BaseHealth> action) => onHealing.AddListener(action);
+        public void OnHealingRemoveListener(UnityAction<BaseHealth> action) => onHealing.RemoveListener(action);
+
+        [SerializeField] private UnityEvent<BaseHealth> onDie;
+        public void OnDieAddListener(UnityAction<BaseHealth> action) => onDie.AddListener(action);
+        public void OnDieRemoveListener(UnityAction<BaseHealth> action) => onDie.RemoveListener(action);
 
         private int currentHealth;
-
-        protected override void CreateInstance() => Instance = this;
-
-        protected override void OnAwake()
+        public int CurrentHealth
         {
-            currentHealth = maxHealth;
+            get => currentHealth;
+            set
+            {
+                if (value > MaxHealth)
+                    CurrentHealth = MaxHealth;
+                else if (value <= 0)
+                {
+                    if (currentHealth > 0)
+                        onDie.Invoke(this);
+                }
+                else
+                {
+                    if (value < currentHealth)
+                        onTakeDamage.Invoke(this);
+                    else if (value > currentHealth)
+                        onHealing.Invoke(this);
+                }
+                currentHealth = value;
+                onHealthChange.Invoke(this);
+            }
         }
 
-        public void TakeDamage(int amount)
+        private void Awake() => currentHealth = MaxHealth;
+
+/*         public void TakeDamage(int amount)
         {
             if (amount <= 0)
                 return;
@@ -23,6 +58,6 @@ namespace Controllers
             currentHealth -= amount;
             if (currentHealth <= 0)
                 GameManager.Instance?.OnLose();
-        }
+        } */
     }
 }

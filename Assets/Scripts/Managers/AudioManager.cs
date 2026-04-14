@@ -1,10 +1,11 @@
+using Abstraction;
 using UnityEngine;
 
-namespace Controllers
+namespace Managers
 {
     public class AudioManager : PersistentSingleton<AudioManager>
     {
-        protected override void CreateInstance() => Instance = this;
+        protected override AudioManager CreateInstance() => this;
 
         [SerializeField] private AudioSource ambientSource;
         [SerializeField] private AudioSource sfxSource;

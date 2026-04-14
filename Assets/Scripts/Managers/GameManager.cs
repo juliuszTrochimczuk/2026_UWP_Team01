@@ -1,10 +1,10 @@
-using UnityEngine;
+using Abstraction;
 
-namespace Controllers
+namespace Managers
 {
     public class GameManager : PersistentSingleton<GameManager>
     {
-        protected override void CreateInstance() => Instance = this;
+        protected override GameManager CreateInstance() => this;
 
         public enum GamePhase
         {
@@ -14,9 +14,9 @@ namespace Controllers
 
         public GamePhase CurrentPhase { get; private set; }
 
-        protected override void OnAwake()
+        protected override void Awake()
         {
-            base.OnAwake();
+            base.Awake();
             //for demonstration purposes
             StartDefensePhase();
         }

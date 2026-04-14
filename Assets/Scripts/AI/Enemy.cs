@@ -1,4 +1,5 @@
-using Controllers;
+using Managers;
+using Towers;
 using UnityEngine;
 
 namespace AI
@@ -9,7 +10,7 @@ namespace AI
 
         public void ReachBase()
         {
-            BaseHealth.Instance?.TakeDamage(damageToBase);
+            MainBase.Instance.BaseHealth.CurrentHealth -= damageToBase;
             WaveManager.Instance?.DecreaseWaveActiveEnemy();
             Destroy(gameObject);
         }

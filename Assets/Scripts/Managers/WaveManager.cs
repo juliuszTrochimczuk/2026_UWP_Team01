@@ -4,12 +4,13 @@ using UnityEngine;
 using Wave;
 using UnityEngine.Splines;
 using AI;
+using Abstraction;
 
-namespace Controllers
+namespace Managers
 {
     public class WaveManager : Singleton<WaveManager>
     {
-        protected override void CreateInstance() => Instance = this;
+        protected override WaveManager CreateInstance() => this;
 
         [SerializeField] private List<WaveData> waves;
         [SerializeField] private float delayBetweenSpawns = 1f;
