@@ -1,9 +1,16 @@
 using Abstraction;
+using System.Collections;
+using TMPro;
+using UnityEngine;
 
 namespace Managers
 {
     public class GameManager : PersistentSingleton<GameManager>
     {
+        [SerializeField] private float constructionDuration = 30f;
+        [SerializeField] private TextMeshProUGUI timerText; // I'm tired of creation separate manager for each UI element
+        private float timeRemaining;
+
         protected override GameManager CreateInstance() => this;
 
         public enum GamePhase
@@ -17,14 +24,17 @@ namespace Managers
         protected override void Awake()
         {
             base.Awake();
-            //for demonstration purposes
-            StartDefensePhase();
+
+            StartConstructionPhase();
         }
 
         public void StartConstructionPhase()
         {
             CurrentPhase = GamePhase.Construction;
             SignalBus.Instance?.FireSignal("ConstructionPhaseStarted");
+            timeRemaining = constructionDuration;
+
+            StartCoroutine(ConstructionCountdown());
         }
 
         public void StartDefensePhase()
@@ -43,6 +53,21 @@ namespace Managers
         {
             WaveManager.Instance?.AbortWaves();
             SignalBus.Instance?.FireSignal("GameLost");
+        }
+
+        IEnumerator ConstructionCountdown()
+        {
+            while (timeRemaining > 0)
+            {
+                timerText.text = "Build Time: " + Mathf.CeilToInt(timeRemaining).ToString();
+
+                timeRemaining -= Time.deltaTime;
+
+                yield return null;
+            }
+            timerText.enabled = false;
+
+            StartDefensePhase();
         }
     }
 }

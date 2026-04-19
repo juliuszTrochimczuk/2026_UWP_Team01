@@ -32,6 +32,6 @@ public class Node : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (towerOnNode != null) 
             return;
 
-        towerOnNode = BuildManager.Instance.GetTower(transform.position, transform.rotation);
+        towerOnNode = InstanceManager.Instance.GetTower(transform.position, transform.rotation);
     }
 }

@@ -6,6 +6,8 @@ using UnityEngine.Splines;
 using AI;
 using Abstraction;
 using UnityEngine.Events;
+using Presenters;
+using UI;
 
 namespace Managers
 {
@@ -18,6 +20,16 @@ namespace Managers
         [SerializeField] private float delayBetweenWaves = 3f;
         [SerializeField] private SplineContainer path;
         [SerializeField] private float spawnHeightOffset = 1f;
+        [SerializeField] private WaveCounter waveCounter;
+        [SerializeField] private NextWaveCounter nextWaveCounter;
+        private WavePresenter waveCounterPresenter;
+        private NextWavePresenter nextWaveCounterPresenter;
+
+        private void Start()
+        {
+            waveCounterPresenter = new WavePresenter(waveCounter);
+            nextWaveCounterPresenter = new NextWavePresenter(nextWaveCounter);
+        }
 
         private readonly List<GameObject> activeSpawnInstances = new();
 
@@ -26,8 +38,9 @@ namespace Managers
         private bool wavesAborted;
         private float pathStart;
 
-        public int CurrentWaveIndex { get; private set; }
+        public int CurrentWaveIndex { get; private set; } = -1;
         public int WaveCount => waves.Count;
+        public WaveData NextWave => waves[CurrentWaveIndex + 1 < waves.Count ? CurrentWaveIndex + 1 : CurrentWaveIndex];
 
         [SerializeField] private UnityEvent onWaveStart;
         public void OnWaveStartAddListener(UnityAction action) => onWaveStart.AddListener(action);
@@ -96,7 +109,6 @@ namespace Managers
             Vector3 startPos = path.transform.TransformPoint(path.Spline.EvaluatePosition(pathStart));
             startPos.y = spawnHeightOffset;
 
-
             for (int i = 0; i < count; i++)
             {
                 var instance = Instantiate(prefab, startPos, Quaternion.identity);
@@ -126,6 +138,12 @@ namespace Managers
             }
 
             activeSpawnInstances.Clear();
+        }
+
+        private void OnDestroy()
+        {
+            waveCounterPresenter.Disconnect();
+            nextWaveCounterPresenter.Disconnect();
         }
     }
 }

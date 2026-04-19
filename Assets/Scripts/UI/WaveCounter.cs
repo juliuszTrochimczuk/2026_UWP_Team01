@@ -1,4 +1,3 @@
-using Managers;
 using TMPro;
 using UnityEngine;
 
@@ -9,13 +8,10 @@ namespace UI
         [SerializeField] private TextMeshProUGUI activeWave;
         [SerializeField] private TextMeshProUGUI maxWave;
 
-        private void Start()
+        public void UpdateWaveCounter(string activeWave, string maxWave)
         {
-            maxWave.text = WaveManager.Instance.WaveCount.ToString();
-            activeWave.text = (WaveManager.Instance.CurrentWaveIndex + 1).ToString();
-            WaveManager.Instance.OnWaveStartAddListener(() => 
-                activeWave.text = (WaveManager.Instance.CurrentWaveIndex + 1).ToString()
-            );
+            this.activeWave.text = activeWave;
+            this.maxWave.text = maxWave;
         }
     }
 }

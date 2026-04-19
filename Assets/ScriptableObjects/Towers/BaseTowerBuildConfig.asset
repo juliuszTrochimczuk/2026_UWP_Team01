@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb02304d8e425d0458c4eff5fbd8844e, type: 3}
-  m_Name: BaseTowerConfig
-  m_EditorClassIdentifier: Assembly-CSharp::TowerConfig
+  m_Script: {fileID: 11500000, guid: 2edbeb252cddcdb478dc0713fe3713ee, type: 3}
+  m_Name: BaseTowerBuildConfig
+  m_EditorClassIdentifier: Assembly-CSharp::TowerBuildConfig
   <TowerCost>k__BackingField: 10
-  <TowerRange>k__BackingField: 15
-  <FireRate>k__BackingField: 2
-  <TurnSpeed>k__BackingField: 10
-  <EnemyTag>k__BackingField: Enemy
+  <TowerPrefab>k__BackingField: {fileID: 8100624562480534323, guid: dbe00ccd17da12a47a40e1f671fe1dfc, type: 3}

@@ -177,7 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2dd014ad651deb4be80acf7a11d64f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.HealthBar
-  healthComponent: {fileID: 221753651944639908}
   bar: {fileID: 8939534742739081275}
 --- !u!1 &6906540368363573137
 GameObject:
@@ -308,7 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4979783c6f7061684565edcd263bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI.EnemyMovement
-  speed: 20
+  speed: 15
 --- !u!114 &5855022030364774631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,7 +320,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d5e6f708192a3b4c5d6e7f8091a2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI.Enemy
+  healthComponent: {fileID: 221753651944639908}
+  healthView: {fileID: 4010236714560411068}
   damageToBase: 10
+  rewardOnDeath: 5
 --- !u!114 &221753651944639908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,7 +348,19 @@ MonoBehaviour:
       m_Calls: []
   onDie:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5855022030364774631}
+        m_TargetAssemblyTypeName: AI.Enemy, Assembly-CSharp
+        m_MethodName: Die
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6941714691725538330
 GameObject:
   m_ObjectHideFlags: 0
