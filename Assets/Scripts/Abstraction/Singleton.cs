@@ -9,16 +9,10 @@ namespace Abstraction
         protected virtual void Awake()
         {
             if (Instance != null)
-                DestroyInstance();
+                Destroy(Instance.gameObject);
             Instance = CreateInstance();
         }
 
-        private void OnDestroy()
-        {
-            DestroyInstance();
-        }
-
-        protected virtual void DestroyInstance() => Destroy(Instance);
         protected abstract T CreateInstance();
     }
 }
