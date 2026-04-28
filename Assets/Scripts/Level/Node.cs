@@ -1,11 +1,15 @@
 using Managers;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Renderer))]
 public class Node : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     [SerializeField] private Material hoverMaterial;
+    [SerializeField] private UnityEvent<Node> onNodeClicked;
+    public void OnNodeClickedAddListener(UnityAction<Node> action) => onNodeClicked.AddListener(action);
+    public void OnNodeClickedRemoveListener(UnityAction<Node> action) => onNodeClicked.RemoveListener(action);
 
     private Renderer rend;
     private Material baseMaterial;
@@ -29,6 +33,8 @@ public class Node : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        onNodeClicked.Invoke(this);
+
         if (towerOnNode != null) 
             return;
 
