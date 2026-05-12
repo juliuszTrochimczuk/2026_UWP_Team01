@@ -8,6 +8,7 @@ namespace Managers
     {
         [SerializeField] private TowerBuildConfig towerBuildConfig;
         [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private GameObject enemyPrefab;
 
         protected override InstanceManager CreateInstance() => this;
 
@@ -26,6 +27,11 @@ namespace Managers
         public GameObject GetBullet(Vector3 position, Quaternion rotation)
         {
             return UniversalFactory.Instance.Create(new(bulletPrefab, position, rotation));
+        }
+
+        public GameObject GetEnemy(Vector3 position, Quaternion rotation)
+        {
+            return UniversalFactory.Instance.Create(new(enemyPrefab, position, rotation));
         }
     }
 }

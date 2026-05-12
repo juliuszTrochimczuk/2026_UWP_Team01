@@ -111,7 +111,7 @@ namespace Managers
 
             for (int i = 0; i < count; i++)
             {
-                var instance = Instantiate(prefab, startPos, Quaternion.identity);
+                var instance = InstanceManager.Instance.GetEnemy(startPos, Quaternion.identity);
                 var movement = instance.GetComponent<EnemyMovement>();
                 movement?.SetPath(path);
 
