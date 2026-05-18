@@ -1,4 +1,5 @@
 using Core;
+using Managers;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -16,7 +17,7 @@ public class Bullet : MonoBehaviour
     {
         if (target == null)
         {
-            Destroy(gameObject);
+            BulletPool.Instance.ReturnToPool(this);
             return;
         }
 
@@ -41,6 +42,6 @@ public class Bullet : MonoBehaviour
         enemyHeatlh.CurrentHealth -= config.Damage;
 
         Destroy(effect, 2f);
-        Destroy(gameObject);
+        BulletPool.Instance.ReturnToPool(this);
     }
 }

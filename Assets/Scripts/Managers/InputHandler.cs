@@ -9,7 +9,6 @@ namespace Managers
         protected override InputHandler CreateInstance() => this;
 
 
-
         private void OnEnable() 
         {
             if (InputActions == null)

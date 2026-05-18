@@ -43,7 +43,7 @@ namespace AI
         {
             this.path = path;
             splineLength = path.Spline.GetLength();
+            currentT = 0f;
         }
-
     }
 }

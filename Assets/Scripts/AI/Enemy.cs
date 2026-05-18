@@ -17,28 +17,26 @@ namespace AI
 
         private HealthPresenter presenter;
 
-        void Start()
-        {
-            presenter = new HealthPresenter(healthComponent, healthView);
-        }
+        private void Start() => presenter = new HealthPresenter(healthComponent, healthView);
+
+        private void OnDestroy() => presenter.Disconnect();
 
         public void ReachBase()
         {
             MainBase.Instance.BaseHealth.CurrentHealth -= damageToBase;
-            WaveManager.Instance?.DecreaseWaveActiveEnemy();
-            Destroy(gameObject);
+            DisableEnemy();
         }
 
         public void Die()
         {
             CoinsManager.Instance?.AddCoins(rewardOnDeath);
-            WaveManager.Instance?.DecreaseWaveActiveEnemy();
-            Destroy(gameObject);
+            DisableEnemy();
         }
 
-        void OnDestroy()
+        private void DisableEnemy()
         {
-            presenter.Disconnect();
+            WaveManager.Instance?.DecreaseWaveActiveEnemy();
+            EnemyPool.Instance.ReturnToPool(this);
         }
     }
 }

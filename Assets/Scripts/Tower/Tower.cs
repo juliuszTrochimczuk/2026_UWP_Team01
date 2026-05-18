@@ -94,12 +94,10 @@ public class Tower : MonoBehaviour
 
     private void Shoot()
     {
-        var bulletGO = InstanceManager.Instance.GetBullet(firePoint.position, firePoint.rotation);
-        var bullet = bulletGO.GetComponent<Bullet>();
-        if (bullet != null)
-        {
-            bullet.Seek(target);
-        }
+        var bullet = BulletPool.Instance.GetFromPool();
+        bullet.transform.position = firePoint.position;
+        bullet.transform.rotation = firePoint.rotation;
+        bullet.Seek(target);
     }
 
     private void OnDrawGizmos()

@@ -48,6 +48,10 @@ namespace Core
             }
         }
 
-        private void Awake() => currentHealth = MaxHealth;
+        private void OnEnable()
+        {
+            currentHealth = MaxHealth;
+            onHealthChange.Invoke(this);
+        }
     }
 }

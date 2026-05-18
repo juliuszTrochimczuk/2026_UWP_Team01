@@ -40,8 +40,8 @@ namespace Abstraction
                 throw new ArgumentException($"This object is out of the pool");
 
             @object.gameObject.SetActive(false);
-            @object.gameObject.transform.position = Vector3.zero;
             @object.gameObject.transform.parent = transform;
+            @object.gameObject.transform.localPosition = Vector3.zero;
         }
 
         private void IncreasePoolSize()

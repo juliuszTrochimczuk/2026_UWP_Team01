@@ -105,17 +105,17 @@ namespace Managers
         private IEnumerator SpawnEntireWave(WaveData wave)
         {
             int count = wave.SpawnCount;
-            GameObject prefab = wave.EnemyPrefab;
             Vector3 startPos = path.transform.TransformPoint(path.Spline.EvaluatePosition(pathStart));
             startPos.y = spawnHeightOffset;
 
             for (int i = 0; i < count; i++)
             {
-                var instance = Instantiate(prefab, startPos, Quaternion.identity);
+                var instance = EnemyPool.Instance.GetFromPool();
+                instance.transform.position = startPos;
                 var movement = instance.GetComponent<EnemyMovement>();
                 movement?.SetPath(path);
 
-                activeSpawnInstances.Add(instance);
+                activeSpawnInstances.Add(instance.gameObject);
                 enemiesActiveInCurrentWave++;
 
                 if (i < count - 1)
