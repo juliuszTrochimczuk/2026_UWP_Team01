@@ -7,7 +7,6 @@ namespace Managers
     public class InstanceManager : PersistentSingleton<InstanceManager>
     {
         [SerializeField] private TowerBuildConfig towerBuildConfig;
-        [SerializeField] private GameObject bulletPrefab;
 
         protected override InstanceManager CreateInstance() => this;
 
