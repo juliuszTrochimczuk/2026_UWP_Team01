@@ -4,10 +4,15 @@ namespace Managers
 {
     public class InputHandler : PersistentSingleton<InputHandler>
     {
-        public InputSystem_Actions InputActions { get; private set; } = new();
+        public InputSystem_Actions InputActions { get; private set; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            InputActions = new();
+        }
 
         protected override InputHandler CreateInstance() => this;
-
 
         private void OnEnable() 
         {
