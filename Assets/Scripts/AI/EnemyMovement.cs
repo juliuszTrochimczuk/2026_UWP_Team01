@@ -12,6 +12,7 @@ namespace AI
 
         private Enemy enemy;
         private float currentT;
+        public float Progress => currentT;
         private bool finished;
 
         private void Awake()

@@ -9,6 +9,7 @@ public class Tower : MonoBehaviour
     private Transform firePoint;
     private Transform target;
     private float fireCountdown = 0f;
+    private ITargetSelectionStrategy targetingStrategy;
 
     void Start()
     {
@@ -17,6 +18,8 @@ public class Tower : MonoBehaviour
 
         SignalBus.Instance.SubscribeEvent("DefensePhaseStarted", OnDefence);
         SignalBus.Instance.SubscribeEvent("ConstructionPhaseStarted", OnConstruction);
+
+        targetingStrategy = new NearestTargetSelection();
 
         switch(GameManager.Instance.CurrentPhase)
         {
@@ -28,48 +31,53 @@ public class Tower : MonoBehaviour
                 break;
         }
     }
+private void OnDefence()
+{
+    if(IsInvoking(nameof(UpdateTarget)))
+        return;
 
-    private void OnDefence()
+    InvokeRepeating(nameof(UpdateTarget), 0f, 0.1f);
+}
+
+private void OnConstruction()
+{
+    if (!IsInvoking(nameof(UpdateTarget))) 
+        return;
+
+    CancelInvoke(nameof(UpdateTarget));
+}
+
+void UpdateTarget()
+{
+    var enemies = GameObject.FindGameObjectsWithTag(towerConfig.EnemyTag);
+
+    bool highHealthEnemyDetected = false;
+    foreach (var enemy in enemies)
     {
-        if(IsInvoking(nameof(UpdateTarget)))
-            return;
-
-        InvokeRepeating(nameof(UpdateTarget), 0f, 0.1f);
-    }
-
-    private void OnConstruction()
-    {
-        if (!IsInvoking(nameof(UpdateTarget))) 
-            return;
-
-        CancelInvoke(nameof(UpdateTarget));
-    }
-
-    void UpdateTarget()
-    {
-        var enemies = GameObject.FindGameObjectsWithTag(towerConfig.EnemyTag);
-        var shortestDistance = Mathf.Infinity;
-        GameObject nearestEnemy = null;
-
-        foreach (var enemy in enemies)
+        float distance = Vector3.Distance(transform.position, enemy.transform.position);
+        if (distance <= towerConfig.TowerRange)
         {
-            var  distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distanceToEnemy <= shortestDistance)
+            var health = enemy.GetComponent<Core.BaseHealth>();
+            if (health != null && health.CurrentHealth > (health.MaxHealth * 0.5f))
             {
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
+                highHealthEnemyDetected = true;
+                break;
             }
         }
-
-        if (nearestEnemy != null && shortestDistance <= towerConfig.TowerRange)
-        {
-            target = nearestEnemy.transform;
-        }
-        else
-        {
-            target = null;
-        }
     }
+
+    if (highHealthEnemyDetected)
+    {
+        targetingStrategy = new StrongestTargetSelection();
+    }
+    else
+    {
+        targetingStrategy = new NearestTargetSelection();
+    }
+
+    target = targetingStrategy.SelectTarget(enemies, transform, towerConfig.TowerRange);
+}
+
 
     void Update()
     {

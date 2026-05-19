@@ -1,10 +1,10 @@
-using Managers;
+﻿using Managers;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class EnemyTutorialText : MonoBehaviour, IPointerDownHandler
+public class TowerStrategyTutorialText : MonoBehaviour, IPointerDownHandler
 {
     private static bool isTutorialCompleted = false;
     private CanvasGroup canvasGroup;
@@ -15,7 +15,7 @@ public class EnemyTutorialText : MonoBehaviour, IPointerDownHandler
 
         if (!isTutorialCompleted)
         {
-            SignalBus.Instance.SubscribeEvent("DefensePhaseStarted", StartTutorial);
+            SignalBus.Instance.SubscribeEvent("EnemyTutorialCompleted", StartTutorial);
         }
         else
             canvasGroup.alpha = 0;
@@ -40,6 +40,5 @@ public class EnemyTutorialText : MonoBehaviour, IPointerDownHandler
         Time.timeScale = 1;
         isTutorialCompleted = true;
         gameObject.SetActive(false);
-        SignalBus.Instance.FireSignal("EnemyTutorialCompleted");
     }
 }
