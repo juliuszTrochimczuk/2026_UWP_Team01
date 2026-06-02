@@ -1096,7 +1096,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4979783c6f7061684565edcd263bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI.EnemyMovement
-  speed: 15
 --- !u!114 &5855022030364774631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1111,8 +1110,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AI.Enemy
   healthComponent: {fileID: 221753651944639908}
   healthView: {fileID: 4010236714560411068}
-  damageToBase: 10
-  rewardOnDeath: 5
+  <Movement>k__BackingField: {fileID: 6479750056791397713}
+  <Config>k__BackingField: {fileID: 11400000, guid: bddb070e96b18b34eaef0e4ca159b28e, type: 2}
+  startState: 0
 --- !u!114 &221753651944639908
 MonoBehaviour:
   m_ObjectHideFlags: 0

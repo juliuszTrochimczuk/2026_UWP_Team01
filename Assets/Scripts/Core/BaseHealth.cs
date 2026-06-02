@@ -53,5 +53,11 @@ namespace Core
             currentHealth = MaxHealth;
             onHealthChange.Invoke(this);
         }
+
+        public void SetHealth(int newHealthValue)
+        {
+            MaxHealth = newHealthValue;
+            currentHealth = newHealthValue;
+        }
     }
 }

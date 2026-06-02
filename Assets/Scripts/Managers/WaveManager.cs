@@ -112,8 +112,7 @@ namespace Managers
             {
                 var instance = EnemyPool.Instance.GetFromPool();
                 instance.transform.position = startPos;
-                var movement = instance.GetComponent<EnemyMovement>();
-                movement?.SetPath(path);
+                instance.Movement.SetPath(path);
 
                 activeSpawnInstances.Add(instance.gameObject);
                 enemiesActiveInCurrentWave++;
