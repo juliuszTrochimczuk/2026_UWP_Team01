@@ -44,10 +44,7 @@ namespace Managers
             WaveManager.Instance?.BeginDefenseWaves();
         }
 
-        public void OnWin()
-        {
-            SignalBus.Instance?.FireSignal("GameWon");
-        }
+        public void OnWin() => SignalBus.Instance?.FireSignal("GameWon");
 
         public void OnLose()
         {
