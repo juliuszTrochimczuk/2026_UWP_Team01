@@ -50,12 +50,30 @@ namespace Managers
             WaveManager.Instance?.BeginDefenseWaves();
         }
 
-        public void OnWin() => SignalBus.Instance?.FireSignal("GameWon");
+        public void OnWin() {
+            AudioManager.Instance?.Stop("ConstructionTheme");
+            AudioManager.Instance?.Stop("DefenseTheme");
+
+            SignalBus.Instance?.FireSignal("GameWon");
+            AudioManager.Instance?.Play("Victory");
+        }
 
         public void OnLose()
         {
+            AudioManager.Instance?.Stop("ConstructionTheme");
+            AudioManager.Instance?.Stop("DefenseTheme");
+
             WaveManager.Instance?.AbortWaves();
             SignalBus.Instance?.FireSignal("GameLost");
+            var rand = Random.Range(0, 1);
+            if (rand == 0)
+            {
+                AudioManager.Instance?.Play("Fahh");
+            }
+            else
+            {
+                AudioManager.Instance?.Play("Vine-boom");
+            }
         }
 
         IEnumerator ConstructionCountdown()

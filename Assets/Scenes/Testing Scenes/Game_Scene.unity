@@ -8122,8 +8122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1e2d3c4b5a6978890a1b2c3d4e5f605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Controllers.AudioManager
-  ambientSource: {fileID: 0}
-  sfxSource: {fileID: 0}
 --- !u!4 &953547063
 Transform:
   m_ObjectHideFlags: 0
@@ -15370,6 +15368,24 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 1
+    source: {fileID: 0}
+  - name: Fahh
+    clip: {fileID: 8300000, guid: 19fe37c1bb6997c4dbc5ae1ff2ae28e1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Victory
+    clip: {fileID: 8300000, guid: 0a07bd2fda82ce8479a5eea3a9a30da5, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Vine-boom
+    clip: {fileID: 8300000, guid: 10b4530be5b30d34b95fef7a367f5049, type: 3}
+    volume: 0.9
+    pitch: 1
+    loop: 0
     source: {fileID: 0}
 --- !u!1001 &1709483554
 PrefabInstance:
