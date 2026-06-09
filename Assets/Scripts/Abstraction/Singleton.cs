@@ -11,8 +11,10 @@ namespace Abstraction
             if (Instance != null)
                 Destroy(Instance.gameObject);
             Instance = CreateInstance();
+            Init();
         }
 
         protected abstract T CreateInstance();
+        protected virtual void Init() { }
     }
 }

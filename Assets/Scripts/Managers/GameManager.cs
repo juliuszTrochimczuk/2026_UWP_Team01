@@ -30,6 +30,9 @@ namespace Managers
 
         public void StartConstructionPhase()
         {
+            AudioManager.Instance?.Stop("DefenseTheme");
+            AudioManager.Instance?.Play("ConstructionTheme");
+
             CurrentPhase = GamePhase.Construction;
             SignalBus.Instance?.FireSignal("ConstructionPhaseStarted");
             timeRemaining = constructionDuration;
@@ -39,6 +42,9 @@ namespace Managers
 
         public void StartDefensePhase()
         {
+            AudioManager.Instance?.Stop("ConstructionTheme");
+            AudioManager.Instance?.Play("DefenseTheme");
+
             CurrentPhase = GamePhase.Defense;
             SignalBus.Instance?.FireSignal("DefensePhaseStarted");
             WaveManager.Instance?.BeginDefenseWaves();
